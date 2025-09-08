@@ -2,8 +2,8 @@ import React from 'react'
 
 export default function Navbar() {
   return (
-<div className='bg-green-100 pb-6'>
-    <div className="navbar  shadow-sm  container mx-auto border-b-4 pb-3   ">
+<div className='bg-green-50  border-b-2 mb-4'>
+    <div className="navbar  shadow-sm  container mx-auto  pb-3 pt-5   ">
 
      <div className="navbar-start">
     <div className="dropdown">
