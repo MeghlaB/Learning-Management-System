@@ -92,7 +92,7 @@ export default function Add_Course() {
 
     return (
         <div className="p-4 sm:p-8 max-w-5xl mx-auto my-8 bg-white rounded-lg shadow-lg">
-            <h1 className="text-3xl sm:text-4xl font-extrabold text-center text-gray-800 mb-8">Add New Course 📚</h1>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-center text-gray-800 mb-8">Add New Course </h1>
             
             <form onSubmit={handleSubmit} className="space-y-8">
                 {/* Course Details Section */}
@@ -187,12 +187,10 @@ export default function Add_Course() {
                 {/* Dynamic Fields Section: Highlights & Objectives */}
                 <div className="bg-gray-50 p-6 rounded-lg shadow-inner grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-700 mb-4">Course Highlights 💡</h2>
+                        <h2 className="text-2xl font-bold text-gray-700 mb-4">Course Highlights </h2>
                         {courseData.highlights.map((highlight, index) => (
                             <div key={index} className="flex items-center gap-2 mb-2">
-                                <span className="text-blue-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                                </span>
+                                
                                 <input type="text" value={highlight} onChange={(e) => handleArrayChange(e, index, 'highlights')} className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
                                 {courseData.highlights.length > 1 && (
                                     <button type="button" onClick={() => removeField(index, 'highlights')} className="text-red-500 hover:text-red-700 transition-colors">
@@ -207,12 +205,10 @@ export default function Add_Course() {
                     </div>
 
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-700 mb-4">Learning Objectives 🎯</h2>
+                        <h2 className="text-2xl font-bold text-gray-700 mb-4">Learning Objectives </h2>
                         {courseData.objectives.map((objective, index) => (
                             <div key={index} className="flex items-center gap-2 mb-2">
-                                <span className="text-green-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                                </span>
+                             
                                 <input type="text" value={objective} onChange={(e) => handleArrayChange(e, index, 'objectives')} className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500" required />
                                 {courseData.objectives.length > 1 && (
                                     <button type="button" onClick={() => removeField(index, 'objectives')} className="text-red-500 hover:text-red-700 transition-colors">
@@ -230,7 +226,7 @@ export default function Add_Course() {
                 {/* Submit Button */}
                 <div className="flex justify-end pt-4">
                     <button type="submit" className="w-full sm:w-auto bg-indigo-600 text-white text-lg font-bold px-10 py-4 rounded-full hover:bg-indigo-700 transition-all transform hover:scale-105 shadow-xl">
-                        Publish Course 🎉
+                        Add Course 
                     </button>
                 </div>
             </form>
