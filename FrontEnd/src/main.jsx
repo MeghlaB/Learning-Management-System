@@ -9,8 +9,8 @@ import {
 import router from './Routers/Router.jsx';
 
 createRoot(document.getElementById('root')).render(
-  
-   <StrictMode>
+
+  <StrictMode>
     <RouterProvider router={router} />
   </StrictMode>
 
