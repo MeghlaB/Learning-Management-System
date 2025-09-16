@@ -1,6 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 function Learned() {
+    const [courses, setCourseData] = useState([])
+
+    // Fetch all courses
+    useEffect(() => {
+        fetch('http://localhost:5000/courses')
+            .then(res => res.json())
+            .then(data => {
+                setCourseData(data)
+            })
+    }, [])
+
+    console.log(courses)
+
+
+
+
+
+
+
     return (
         <div className='container mx-auto  mt-5 lg:mt-20'>
             <div className='text-center'>
@@ -10,81 +29,36 @@ function Learned() {
 
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  gap-5 pt-15 px-5 '>
                 {/* card-1 */}
-                <div className="card bg-base-100 w-full shadow-sm">
-                    <figure>
-                        <img
-                            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                            alt="Shoes" />
-                    </figure>
-                    <div className="card-body">
-                        <h2 className="card-title">
-                            Card Title
-                            <div className="badge badge-secondary">NEW</div>
-                        </h2>
-                        <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                        <div className="card-actions justify-end">
-                            <div className="badge badge-outline">Fashion</div>
-                            <div className="badge badge-outline">Products</div>
+                {
+                    courses && courses.map((course) => (
+                        <div className="card bg-base-100 w-full shadow-sm">
+                            <figure>
+                                <img
+                                    src={course.image}
+                                    alt="Shoes" />
+                            </figure>
+                            <div className="card-body">
+                                <h2 className="card-title font-bold">
+                                    {course.title}
+
+                                </h2>
+                                <p>{course.instructor}</p>
+                                <div className='flex gap-1'>
+                                    {Array(parseInt(course.highlights[0])).fill(0).map((_, i) => (
+                                        <div key={i} className="mask mask-star-2 bg-orange-400 w-5 h-5"></div>
+                                    ))}
+                                </div>
+                                <div className="card-actions ">
+                                    <h1 className='text-xl font-bold'>${course.
+                                        discountedPrice}</h1>
+
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                {/* card-2 */}
-                <div className="card bg-base-100 w-full shadow-sm">
-                    <figure>
-                        <img
-                            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                            alt="Shoes" />
-                    </figure>
-                    <div className="card-body">
-                        <h2 className="card-title">
-                            Card Title
-                            <div className="badge badge-secondary">NEW</div>
-                        </h2>
-                        <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                        <div className="card-actions justify-end">
-                            <div className="badge badge-outline">Fashion</div>
-                            <div className="badge badge-outline">Products</div>
-                        </div>
-                    </div>
-                </div>
-                {/* card-3 */}
-                <div className="card bg-base-100 w-full  shadow-sm">
-                    <figure>
-                        <img
-                            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                            alt="Shoes" />
-                    </figure>
-                    <div className="card-body">
-                        <h2 className="card-title">
-                            Card Title
-                            <div className="badge badge-secondary">NEW</div>
-                        </h2>
-                        <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                        <div className="card-actions justify-end">
-                            <div className="badge badge-outline">Fashion</div>
-                            <div className="badge badge-outline">Products</div>
-                        </div>
-                    </div>
-                </div>
-                {/* card-4 */}
-                <div className="card bg-base-100 w-full  shadow-sm">
-                    <figure>
-                        <img
-                            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                            alt="Shoes" />
-                    </figure>
-                    <div className="card-body">
-                        <h2 className="card-title">
-                            Card Title
-                            <div className="badge badge-secondary">NEW</div>
-                        </h2>
-                        <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                        <div className="card-actions justify-end">
-                            <div className="badge badge-outline">Fashion</div>
-                            <div className="badge badge-outline">Products</div>
-                        </div>
-                    </div>
-                </div>
+                    ))
+                }
+
+
             </div>
             {/* Button */}
             <div className='flex items-center justify-center pt-8'>
