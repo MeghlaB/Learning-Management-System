@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function Learned() {
     const [courses, setCourseData] = useState([])
@@ -31,6 +32,7 @@ function Learned() {
                 {/* card-1 */}
                 {
                     courses && courses.map((course) => (
+                       <Link to={`/course/${course._id}`}>
                         <div className="card bg-base-100 w-full shadow-sm">
                             <figure>
                                 <img
@@ -54,7 +56,7 @@ function Learned() {
 
                                 </div>
                             </div>
-                        </div>
+                        </div></Link>
                     ))
                 }
 

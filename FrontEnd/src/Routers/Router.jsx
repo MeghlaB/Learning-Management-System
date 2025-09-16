@@ -6,6 +6,7 @@ import MainLayout from "../Layouts/MainLayout";
 import Home from "../Pages/Home";
 import Dashboard from "../Layouts/Dashboard";
 import Add_Course from "../Pages/Dashboard/Admin/Add_Course";
+import CoursesDetails from "../Pages/Courses/CoursesDetails";
 
 
 const router = createBrowserRouter([
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
         {
             path:"/",
             element:<Home/>
+        },
+        {
+          path:'/course/:id',
+          element:<CoursesDetails></CoursesDetails>
         }
     ],
     
@@ -28,7 +33,8 @@ const router = createBrowserRouter([
       {
         path:'add-course',
         element:<Add_Course></Add_Course>
-      }
+      },
+     
     ],
   },
 
