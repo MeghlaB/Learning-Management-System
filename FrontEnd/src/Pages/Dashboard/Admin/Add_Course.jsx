@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Swal from 'sweetalert2';
 
 export default function Add_Course() {
     // State to hold all form data
@@ -6,7 +7,7 @@ export default function Add_Course() {
         title: '',
         subtitle: '',
         instructor: '',
-        image: null,
+        image: '',
         originalPrice: '',
         discountedPrice: '',
         discountPercentage: '',
@@ -54,15 +55,15 @@ export default function Add_Course() {
             [fieldName]: [...prevData[fieldName], '']
         }));
     };
-    
+
     // Remove field from dynamic arrays
     const removeField = (index, fieldName) => {
-      const newArray = [...courseData[fieldName]];
-      newArray.splice(index, 1);
-      setCourseData(prevData => ({
-        ...prevData,
-        [fieldName]: newArray,
-      }));
+        const newArray = [...courseData[fieldName]];
+        newArray.splice(index, 1);
+        setCourseData(prevData => ({
+            ...prevData,
+            [fieldName]: newArray,
+        }));
     };
 
     // Add new section
@@ -75,25 +76,47 @@ export default function Add_Course() {
 
     // Remove section
     const removeSection = (index) => {
-      const newSections = [...courseData.sections];
-      newSections.splice(index, 1);
-      setCourseData(prevData => ({
-        ...prevData,
-        sections: newSections,
-      }));
+        const newSections = [...courseData.sections];
+        newSections.splice(index, 1);
+        setCourseData(prevData => ({
+            ...prevData,
+            sections: newSections,
+        }));
     };
 
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Form Submitted:", courseData);
-        alert("Course data logged to console. You would save this to your database now!");
+        // send data with database
+        fetch('http://localhost:5000/courses', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(courseData)
+
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                if (data.insertedId) {
+                    Swal.fire({
+                        title: "Course Added",
+                        icon: "success",
+                        draggable: true
+                    })
+                }
+            })
+            .catch(error => {
+                console.log('Error:', error)
+            })
+
     };
 
     return (
         <div className="p-4 sm:p-8 max-w-5xl mx-auto my-8 bg-white rounded-lg shadow-lg">
             <h1 className="text-3xl sm:text-4xl font-extrabold text-center text-gray-800 mb-8">Add New Course </h1>
-            
+
             <form onSubmit={handleSubmit} className="space-y-8">
                 {/* Course Details Section */}
                 <div className="bg-gray-50 p-6 rounded-lg shadow-inner">
@@ -113,7 +136,7 @@ export default function Add_Course() {
                         </div>
                         <div>
                             <label className="block text-gray-700 font-semibold mb-2">Course Thumbnail</label>
-                            <input type="file" name="image" onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-md file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                            <input type="url" name="image" onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-md file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
                         </div>
                     </div>
                 </div>
@@ -190,7 +213,7 @@ export default function Add_Course() {
                         <h2 className="text-2xl font-bold text-gray-700 mb-4">Course Highlights </h2>
                         {courseData.highlights.map((highlight, index) => (
                             <div key={index} className="flex items-center gap-2 mb-2">
-                                
+
                                 <input type="text" value={highlight} onChange={(e) => handleArrayChange(e, index, 'highlights')} className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500" required />
                                 {courseData.highlights.length > 1 && (
                                     <button type="button" onClick={() => removeField(index, 'highlights')} className="text-red-500 hover:text-red-700 transition-colors">
@@ -208,7 +231,7 @@ export default function Add_Course() {
                         <h2 className="text-2xl font-bold text-gray-700 mb-4">Learning Objectives </h2>
                         {courseData.objectives.map((objective, index) => (
                             <div key={index} className="flex items-center gap-2 mb-2">
-                             
+
                                 <input type="text" value={objective} onChange={(e) => handleArrayChange(e, index, 'objectives')} className="flex-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500" required />
                                 {courseData.objectives.length > 1 && (
                                     <button type="button" onClick={() => removeField(index, 'objectives')} className="text-red-500 hover:text-red-700 transition-colors">
@@ -226,7 +249,7 @@ export default function Add_Course() {
                 {/* Submit Button */}
                 <div className="flex justify-end pt-4">
                     <button type="submit" className="w-full sm:w-auto bg-indigo-600 text-white text-lg font-bold px-10 py-4 rounded-full hover:bg-indigo-700 transition-all transform hover:scale-105 shadow-xl">
-                        Add Course 
+                        Add Course
                     </button>
                 </div>
             </form>

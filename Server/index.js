@@ -1,7 +1,14 @@
-require('dotenv').config();
+
 const express = require('express')
+const cors = require('cors');
 const app = express()
+require('dotenv').config();
 const port = process.env.PORT
+
+
+// MiddleWare
+app.use(cors())
+app.use(express.json())
 
 
 
@@ -18,13 +25,23 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    // await client.connect();
-    // Send a ping to confirm a successful connection
+    await client.connect();
+    const coursesCollection = client.db('Ecademy').collection('Courses')
+
+    // courses api post 
+    app.post('/courses', async (req, res) => {
+      const coursesData = req.body
+      const result = await coursesCollection.insertOne(coursesData)
+      console.log(result)
+      res.send(result)
+    })
+
+
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
-    await client.close();
+    // await client.close();
   }
 }
 run().catch(console.dir);
