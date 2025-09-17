@@ -28,7 +28,7 @@ export default function Navbar() {
 
         </div>
         <div className="navbar-end">
-         <Link to={'/dashboard'}> <a className="btn bg-blue-700 text-white rounded-3xl">Create Account</a></Link>
+         <Link to={'/auth/register'}> <button className="btn bg-blue-700 text-white rounded-3xl">Create Account</button></Link>
         </div>
 
       </div>

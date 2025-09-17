@@ -13,7 +13,7 @@ function Learned() {
             })
     }, [])
 
-    console.log(courses)
+ 
 
 
 
@@ -32,31 +32,31 @@ function Learned() {
                 {/* card-1 */}
                 {
                     courses && courses.map((course) => (
-                       <Link to={`/course/${course._id}`}>
-                        <div className="card bg-base-100 w-full shadow-sm">
-                            <figure>
-                                <img
-                                    src={course.image}
-                                    alt="Shoes" />
-                            </figure>
-                            <div className="card-body">
-                                <h2 className="card-title font-bold">
-                                    {course.title}
+                        <Link to={`/course/${course._id}`}>
+                            <div className="card bg-base-100 w-full shadow-sm">
+                                <figure>
+                                    <img
+                                        src={course.image}
+                                        alt="Shoes" />
+                                </figure>
+                                <div className="card-body">
+                                    <h2 className="card-title font-bold">
+                                        {course.title}
 
-                                </h2>
-                                <p>{course.instructor}</p>
-                                <div className='flex gap-1'>
-                                    {Array(parseInt(course.highlights[0])).fill(0).map((_, i) => (
-                                        <div key={i} className="mask mask-star-2 bg-orange-400 w-5 h-5"></div>
-                                    ))}
-                                </div>
-                                <div className="card-actions ">
-                                    <h1 className='text-xl font-bold'>${course.
-                                        discountedPrice}</h1>
+                                    </h2>
+                                    <p>{course.instructor}</p>
+                                    <div className='flex gap-1'>
+                                        {Array(parseInt(course.highlights[0])).fill(0).map((_, i) => (
+                                            <div key={i} className="mask mask-star-2 bg-orange-400 w-5 h-5"></div>
+                                        ))}
+                                    </div>
+                                    <div className="card-actions ">
+                                        <h1 className='text-xl font-bold'>${course.
+                                            discountedPrice}</h1>
 
+                                    </div>
                                 </div>
-                            </div>
-                        </div></Link>
+                            </div></Link>
                     ))
                 }
 
