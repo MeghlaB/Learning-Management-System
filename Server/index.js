@@ -27,7 +27,35 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     const coursesCollection = client.db('Ecademy').collection('Courses')
+    const usersCollection= client.db('Ecademy').collection('users')
 
+
+    // user api post 
+
+    app.post('/users',async(req,res)=>{
+      const userData= req.body
+      const query= {email:userData.email}
+      const exitingUser= await usersCollection.findOne(query)
+      if(exitingUser){
+        return res.send({message:'user already exits', instertedId: null})
+      }
+
+      const result = await usersCollection.insertOne(userData)
+      res.send(result)
+    })
+app.get('/users',async(req,res)=>{
+  const userfindData = usersCollection.find()
+  const result= await userfindData.toArray()
+  res.send(result)
+})
+
+
+
+
+
+
+
+// .......................................................................................!
     // courses api post 
     app.post('/courses', async (req, res) => {
       const coursesData = req.body

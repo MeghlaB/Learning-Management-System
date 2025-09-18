@@ -21,6 +21,25 @@ export default function Register() {
             .then(result => {
                 const user = result.user
                 console.log(user)
+                const userInfo = {
+                    name: user.name,
+                    email: user.email,
+                    role: user
+                }
+
+                // userInfo database ey post
+
+                fetch('http://localhost:5000/users', {
+                    method: 'POST',
+                    headers:{
+                     'content-type':'application/json'
+                    },
+                    body:JSON.stringify(userInfo)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log('user collection', data)
+                    })
                 if (user) {
                     Swal.fire({
                         title: "User SuccessFully Login!",
