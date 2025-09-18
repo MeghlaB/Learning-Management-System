@@ -9,48 +9,59 @@ export default function Register() {
     const { createUser } = useContext(AuthContext)
     const navigate = useNavigate()
 
-    const hanldeSubmit = (e) => {
-        e.preventDefault()
-        const form = e.target
-        const FristName = form.first_name.value;
-        const LastName = form.last_name.value;
-        const email = form.email.value;
-        const password = form.password.value;
-        console.log(FristName, LastName, email, password)
-        createUser(email, password)
-            .then(result => {
-                const user = result.user
-                console.log(user)
-                const userInfo = {
-                    name: user.name,
-                    email: user.email,
-                    role: user
-                }
+  const hanldeSubmit = (e) => {
+    e.preventDefault()
+    const form = e.target
+    const firstName = form.first_name.value;
+    const lastName = form.last_name.value;
+    const email = form.email.value;
+    const password = form.password.value;
 
-                // userInfo database ey post
+    const fullName = `${firstName} ${lastName}`
 
-                fetch('http://localhost:5000/users', {
-                    method: 'POST',
-                    headers:{
-                     'content-type':'application/json'
-                    },
-                    body:JSON.stringify(userInfo)
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log('user collection', data)
-                    })
-                if (user) {
-                    Swal.fire({
-                        title: "User SuccessFully Login!",
-                        icon: "success",
-                        draggable: true
-                    });
-                    navigate('/')
-                }
+    createUser(email, password)
+        .then(result => {
+            const user = result.user
+            console.log(user)
+
+            const userInfo = {
+                name: fullName,
+                email: user.email,
+                role: "user"  
+            }
+
+            // userInfo database 
+            fetch('http://localhost:5000/users', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(userInfo)
             })
+                .then(res => res.json())
+                .then(data => {
+                    console.log('user collection', data)
+                })
 
-    }
+            if (user) {
+                Swal.fire({
+                    title: "User Successfully Registered!",
+                    icon: "success",
+                    draggable: true
+                });
+                navigate('/')
+            }
+        })
+        .catch(err => {
+            console.error(err)
+            Swal.fire({
+                title: "Registration Failed",
+                text: err.message,
+                icon: "error"
+            })
+        })
+}
+
 
 
 

@@ -1,7 +1,25 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../Provider/AuthProvider'
+import Swal from 'sweetalert2'
 
 export default function Navbar() {
+  const { user, signout } = useContext(AuthContext)
+  console.log(user)
+
+  const handleSubmit = () => {
+    signout()
+      .then(() => {
+        Swal.fire({
+          title: `${user.displayName || user.email} Successfully Signout`,
+  
+          icon: "success"
+        });
+      })
+  }
+
+
+
   return (
     <div className='bg-green-50  border-b-2 mb-4'>
       <div className="navbar  shadow-sm  container mx-auto  pb-3 pt-5   ">
@@ -28,7 +46,27 @@ export default function Navbar() {
 
         </div>
         <div className="navbar-end">
-         <Link to={'/auth/register'}> <button className="btn bg-blue-700 text-white rounded-3xl">Create Account</button></Link>
+          {
+            user ? (
+              <div className="flex items-center gap-3">
+                <span className="font-semibold text-blue-900">
+                  {user.displayName || user.email}
+                </span>
+                <button
+                  onClick={handleSubmit}
+                  className="btn bg-red-600 text-white rounded-3xl"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <Link to={'/auth/register'}>
+                <button className="btn bg-blue-700 text-white rounded-3xl">
+                  Create Account
+                </button>
+              </Link>
+            )
+          }
         </div>
 
       </div>
