@@ -1,13 +1,18 @@
 
 const express = require('express')
+const jwt = require('jsonwebtoken')
 const cors = require('cors');
+
 const app = express()
 require('dotenv').config();
 const port = process.env.PORT
 
 
 // MiddleWare
-app.use(cors())
+app.use(cors({
+     origin: "http://localhost:5173",
+     credentials:true
+}))
 app.use(express.json())
 
 
@@ -28,8 +33,25 @@ async function run() {
     await client.connect();
     const coursesCollection = client.db('Ecademy').collection('Courses')
     const usersCollection= client.db('Ecademy').collection('users')
+// .......................................................................................................
+
+// jwt related api
+app.post('/jwt',async(req,res)=>{
+  const user = req.body
+  const token= jwt.sign(user,process.env.ACCESS_SECRET_TOKEN,{
+    expiresIn:'1h'
+  })
+  res.send({token})
+})
 
 
+
+
+
+
+
+
+// ................................................................................................................
     // user api post 
 
     app.post('/users',async(req,res)=>{
