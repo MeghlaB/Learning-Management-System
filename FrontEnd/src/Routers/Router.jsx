@@ -9,6 +9,7 @@ import Add_Course from "../Pages/Dashboard/Admin/Add_Course";
 import CoursesDetails from "../Pages/Courses/CoursesDetails";
 import Register from "../Pages/Auth/Register";
 import Login from "../Pages/Auth/Login";
+import AllUser from "../Pages/Dashboard/Admin/AllUser";
 
 
 const router = createBrowserRouter([
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
         path: 'add-course',
         element: <Add_Course></Add_Course>
       },
+      {
+        path:'all-user',
+        element:<AllUser></AllUser>
+      }
 
     ],
   },
