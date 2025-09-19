@@ -1,4 +1,7 @@
 import axios from "axios";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const axiosSecuire = axios.create({
     baseURL: "http://localhost:5000",
@@ -6,6 +9,8 @@ const axiosSecuire = axios.create({
 });
 
 function useAxiosSecuire() {
+    const navigate = useNavigate()
+    const { signout } = useContext(AuthContext)
     // Add a request interceptor
     axiosSecuire.interceptors.request.use(
         function (config) {
@@ -22,11 +27,15 @@ function useAxiosSecuire() {
 
     // Add a response interceptor
 
-    axios.interceptors.response.use(function (response) {
+    axiosSecuire.interceptors.response.use(function (response) {
         return response
-    }, (error) => {
+    }, async (error) => {
         const status = error.response.status
         console.log('status error in the interceptor', status)
+        if (status === 401 || status === 403) {
+          await signout()
+            navigate('/auth/login')
+        }
         return Promise.reject(error)
     }
 

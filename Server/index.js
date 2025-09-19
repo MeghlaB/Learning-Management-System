@@ -49,12 +49,12 @@ async function run() {
     const verifyToken = (req, res, next) => {
       console.log('Inside Token', req.headers.authorization)
       if (!req.headers.authorization) {
-        return res.status(401).send({ message: 'forbidden access' })
+        return res.status(401).send({ message: 'unauthorized access' })
       }
       const token = req.headers.authorization.split(' ')[1]
       jwt.verify(token, process.env.ACCESS_SECRET_TOKEN, (err, decoded) => {
         if (err) {
-          return res.status(401).send({ message: 'forbidden access' })
+          return res.status(401).send({ message: 'unauthorized acces' })
         }
         req.decoded = decoded
         next()
@@ -90,6 +90,26 @@ async function run() {
       const result = await usersCollection.insertOne(userData)
       res.send(result)
     })
+
+   app.delete('/users/:id',async(req,res)=>{
+    const id = req.params.id
+    const query = {_id:new ObjectId (id)}
+    const result = await usersCollection.deleteOne(query)
+    res.send(result)
+   })
+
+   app.patch('/users/admin/:id',async(req,res)=>{
+    const id = req.params.id
+    const filter = {_id:new ObjectId(id)}
+    const updatedDoc={
+      $set:{
+        role:'admin'
+      }
+    }
+    const result = await usersCollection.updateOne(filter,updatedDoc)
+    res.send(result)
+   })
+
 
 
 

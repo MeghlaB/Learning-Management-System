@@ -32,11 +32,16 @@ export default function Navbar() {
 
           </div>
           <div className="flex items-center gap-2">
+     
             <div className="bg-blue-500 text-white p-2 rounded-full">
               {/* You can replace this with an actual logo image */}
               ⚡
             </div>
-            <span className="font-bold text-lg text-blue-800">Edemy</span>
+            <Link to={'/dashboard'}>
+              <span className="font-bold text-lg text-blue-800">Edemy</span>
+            </Link>
+          
+           
           </div>
 
 
